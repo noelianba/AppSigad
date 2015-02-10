@@ -6,21 +6,31 @@ public class MatriculaVO {
 	
 	private int id;
 	private Date fechaCurso;
+	private String centro;
 	private String tipoEnsenanza;
 	private String ensenanza;
 	private String curso;
 	private int idAlumno;
 	
-	public MatriculaVO(int id,Date fechaCurso,String tipoEnsenanza, String ensenanza,
+	public MatriculaVO(int id,Date fechaCurso,String centro,String tipoEnsenanza, String ensenanza,
 			String curso,int idAlumno){
 		
 		this.id=id;
 		this.fechaCurso=fechaCurso;
+		this.centro=centro;
 		this.tipoEnsenanza=tipoEnsenanza;
 		this.ensenanza=ensenanza;
 		this.curso=curso;
 		this.idAlumno=idAlumno;
 		
+	}
+
+	public String getCentro() {
+		return centro;
+	}
+
+	public void setCentro(String centro) {
+		this.centro = centro;
 	}
 
 	public int getId() {
@@ -74,9 +84,9 @@ public class MatriculaVO {
 	@Override
 	public String toString() {
 		return "MatriculaVO [id=" + id + ", fechaCurso=" + fechaCurso
-				+ ", tipoEnsenanza=" + tipoEnsenanza + ", ensenanza="
-				+ ensenanza + ", curso=" + curso + ", idAlumno=" + idAlumno
-				+ "]";
+				+ ", centro=" + centro + ", tipoEnsenanza=" + tipoEnsenanza
+				+ ", ensenanza=" + ensenanza + ", curso=" + curso
+				+ ", idAlumno=" + idAlumno + "]";
 	}
 
 	
