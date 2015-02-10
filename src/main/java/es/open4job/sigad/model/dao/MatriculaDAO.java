@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Date;
 
-public class MatriculaDAO {
+public class MatriculaDAO  implements MatriculaDAOInterface{
 
 	public void InsertarMatricula(int idMatricula, Date fecha, String centro,
 			String tipoEnsenanza, String ensenanza, String curso,
