@@ -3,7 +3,9 @@ package es.open4job.sigad.model.bean;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.faces.bean.ManagedBean;
@@ -13,6 +15,9 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import es.open4job.jsf.model.vo.EstacionServicio;
+import es.open4job.sigad.model.vo.MatriculaVO;
+
 
 
 
@@ -20,7 +25,7 @@ import javax.sql.DataSource;
 @SessionScoped
 public class MatriculaDAOBean  implements MatriculaDAOInterface, Serializable{
 
-	//@Resource(name="jdbc/myoracle")
+	//@Resource(name="jdbc/opensigad")
 	private DataSource ds;
 	
 	String insert = "insertarMatricula";
@@ -30,7 +35,7 @@ public class MatriculaDAOBean  implements MatriculaDAOInterface, Serializable{
 	public MatriculaDAOBean() {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/mysql");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/opensigad");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
@@ -90,5 +95,29 @@ public class MatriculaDAOBean  implements MatriculaDAOInterface, Serializable{
 			}
 		}
 	return modificar;
+	}
+	
+	public ArrayList<MatriculaVO> getListadoMatricula() throws Exception {
+		
+		Connection conn = ds.getConnection();
+		ArrayList<MatriculaVO> lista = new ArrayList<MatriculaVO>();
+		PreparedStatement stmt = conn.prepareStatement("SELECT * FROM matriculas");
+		ResultSet rs = stmt.executeQuery();
+		while(rs.next()){
+			lista.add (new MatriculaVO(rs.getInt(1),rs.getDate(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getInt(7)));
+		}
+		if (rs != null) {
+			try {
+				rs.close();
+			} catch (Exception e) {
+			}
+		}
+		if (stmt != null) {
+			try {
+				stmt.close();
+			} catch (Exception e) {
+			}
+		}
+	return lista;
 	}
 }
