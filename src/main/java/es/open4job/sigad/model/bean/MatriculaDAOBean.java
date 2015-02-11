@@ -13,12 +13,19 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+
+
+
 @ManagedBean
 @SessionScoped
 public class MatriculaDAOBean  implements MatriculaDAOInterface, Serializable{
 
 	//@Resource(name="jdbc/myoracle")
 	private DataSource ds;
+	
+	String insert = "insertarMatricula";
+	String borrar = "borrarMatricula";
+	String modificar = "modificarMatricula";
 	
 	public MatriculaDAOBean() {
 		try {
@@ -28,7 +35,7 @@ public class MatriculaDAOBean  implements MatriculaDAOInterface, Serializable{
 			e.printStackTrace();
 		}
 		}
-	public void InsertarMatricula(int idMatricula, Date fecha, String centro,
+	public String InsertarMatricula(int idMatricula, Date fecha, String centro,
 			String tipoEnsenanza, String ensenanza, String curso) throws SQLException {
 		Connection conn = ds.getConnection();
 		PreparedStatement stmt = conn
@@ -46,9 +53,10 @@ public class MatriculaDAOBean  implements MatriculaDAOInterface, Serializable{
 			} catch (Exception e) {
 			}
 		}
+		return insert;
 	}
 
-	public void BorrarMatricula(int id) throws SQLException {
+	public String BorrarMatricula(int id) throws SQLException {
 		
 		Connection conn = ds.getConnection();
 		PreparedStatement stmt = conn.prepareStatement("DELETE * FROM matriculas WHERE id=?");
@@ -60,9 +68,10 @@ public class MatriculaDAOBean  implements MatriculaDAOInterface, Serializable{
 			} catch (Exception e) {
 			}
 		}
+		return borrar;
 	}
 	
-	public void ModificarMatricula (int idMatricula, Date fecha, String centro,
+	public String ModificarMatricula (int idMatricula, Date fecha, String centro,
 			String tipoEnsenanza, String ensenanza, String curso) throws SQLException{
 		
 		Connection conn = ds.getConnection();
@@ -80,6 +89,6 @@ public class MatriculaDAOBean  implements MatriculaDAOInterface, Serializable{
 			} catch (Exception e) {
 			}
 		}
+	return modificar;
 	}
-
 }
