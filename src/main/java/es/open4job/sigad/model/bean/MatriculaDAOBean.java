@@ -1,15 +1,36 @@
-package es.open4job.sigad.model.dao;
+package es.open4job.sigad.model.bean;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Date;
 
-public class MatriculaDAO  implements MatriculaDAOInterface{
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 
+@ManagedBean
+@SessionScoped
+public class MatriculaDAOBean  implements MatriculaDAOInterface, Serializable{
+
+	//@Resource(name="jdbc/myoracle")
+	private DataSource ds;
+	
+	public MatriculaDAOBean() {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/myoracle");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+		}
 	public void InsertarMatricula(int idMatricula, Date fecha, String centro,
-			String tipoEnsenanza, String ensenanza, String curso,
-			Connection conn) throws SQLException {
+			String tipoEnsenanza, String ensenanza, String curso) throws SQLException {
+		Connection conn = ds.getConnection();
 		PreparedStatement stmt = conn
 				.prepareStatement("INSERT INTO matriculas (id, fecha_curso, centro, tipo_ensenanza, enseñanza, curso) VALUES (?,?,?,?,?,?");
 		stmt.setInt(1, idMatricula);
@@ -27,7 +48,9 @@ public class MatriculaDAO  implements MatriculaDAOInterface{
 		}
 	}
 
-	public void BorrarMatricula(int id, Connection conn) throws SQLException {
+	public void BorrarMatricula(int id) throws SQLException {
+		
+		Connection conn = ds.getConnection();
 		PreparedStatement stmt = conn.prepareStatement("DELETE * FROM matriculas WHERE id=?");
 		stmt.setInt(1, id);
 		stmt.executeUpdate();
@@ -40,7 +63,9 @@ public class MatriculaDAO  implements MatriculaDAOInterface{
 	}
 	
 	public void ModificarMatricula (int idMatricula, Date fecha, String centro,
-			String tipoEnsenanza, String ensenanza, String curso, Connection conn) throws SQLException{
+			String tipoEnsenanza, String ensenanza, String curso) throws SQLException{
+		
+		Connection conn = ds.getConnection();
 		PreparedStatement stmt = conn.prepareStatement("UPDATE FROM matriculas SET fecha_curso=?, centro=?, tipo_ensenanza=?, enseñanza=?, curso=? WHERE id=? )");
 		stmt.setDate(1, (java.sql.Date) fecha);
 		stmt.setString(2, centro);
