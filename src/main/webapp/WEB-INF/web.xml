@@ -41,7 +41,7 @@
 	
  <!-- Welcome page -->
 	<welcome-file-list>
-		<welcome-file>faces/estacion.xhtml</welcome-file>
+		<welcome-file>faces/matricula.xhtml</welcome-file>
 	</welcome-file-list>
 	
 	<resource-ref>
