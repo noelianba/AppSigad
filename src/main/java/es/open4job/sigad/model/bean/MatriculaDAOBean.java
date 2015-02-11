@@ -30,7 +30,7 @@ public class MatriculaDAOBean  implements MatriculaDAOInterface, Serializable{
 	public MatriculaDAOBean() {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/myoracle");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/mysql");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
